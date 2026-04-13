@@ -64,11 +64,17 @@ def admin_addauthority(request):
         
     
     return render(request,"admin/add authority.html")
-def admin_assignauthority(request):
+def admin_assignauthority(request,id):
+    data=authority.objects.all()
     if request.method == 'POST':
-        status=request.POST['status']
+        a=assign_authority()
+        a.status='assigned'
+        a.date=datetime.now().today()
+        a.REQUEST_id=id
+        a.AUTHORITY_id=request.POST['authority']
+        a.save()
         return HttpResponse('ok')
-    return render(request,"admin/assign authorit.html")
+    return render(request,"admin/assign authorit.html",{'data': data})
 
 def admin_authorityfeedback(request):
     return render(request,"admin/authority feedback.html")
@@ -100,8 +106,8 @@ def reject_user(request,id):
     return HttpResponse('''<script>alert("accepted succesfuly");window.location='/myapp/admin_verify/'</script>''')
 
 
-def admin_view(request):
-    a=assign_authority.objects.all()
+def admin_view(request,):
+    a=assign_authority.get()
     return render(request,"admin/view assignment.html",{"data":a})
 def admin_viewauthority(request):
     a=authority.objects.all()
@@ -172,7 +178,7 @@ def user_sendfeedback(request):
         feed.ASSIGN_id=authority.objects.get(id=id)
         feed.USER=user_table.objects.get(LOGIN_id=request.user.id)
         feed.save()
-        return HttpResponse(''' <script>alert("send sucessfully");window.location='myapp/user_viewfeedback/' </script>''')
+        return HttpResponse(''' <script>alert("send sucessfully");window.location='/myapp/user_viewfeedback/' </script>''')
         
     return render(request,"user/send feedback.html")
 def user_sendreq(request):
@@ -181,18 +187,20 @@ def user_sendreq(request):
         description=request.POST['description']
         image=request.FILES['image']
         req=request_table()
+        req.USER=user_table.objects.get(LOGIN=request.user)
         req.title=title
+        req.status='send'
         req.descreption=description
         req.image=image
         req.date=datetime.now().today()
         req.save()
         
-        return HttpResponse('''<script>alert(" req send sucessfully");window.location='myapp/user_requeststat/'</script>''')
+        return HttpResponse('''<script>alert(" req send sucessfully");window.location='/myapp/user_requeststat/'</script>''')
     
     
      return render(request,"user/send req.html")
-def user_viewassigned(request):
-    a=assign_authority.objects.all()
+def user_viewassigned(request,id):
+    a=assign_authority.objects.filter(REQUEST_id=id)
     
     return render(request,"user/view assigned.html",{"data":a})
 def user_viewfeedback(request):
@@ -209,3 +217,6 @@ def authority_home(request):
 def user_home(request):
     return render(request,"user/user home.html")
 
+def assigned_details(request):
+    a=assign_authority.objects.all()
+    return render(request,"admin/assigned view.html",{"data":a})
