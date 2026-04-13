@@ -1,0 +1,86 @@
+
+{% extends 'authority/authority home.html'%}
+{% block body%}
+
+<style>
+    body {
+        background: #f4f6f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+        width: 350px;
+        margin: 80px auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    select:focus {
+        border-color: #007bff;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #218838;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Update Status</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Status</label>
+            <select name="status" required>
+                <option value="">-- Select Status --</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn">Update</button>
+    </form>
+</div>
+
+{% endblock %}

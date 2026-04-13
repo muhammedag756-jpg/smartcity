@@ -1,0 +1,104 @@
+{% extends 'admin/admin home.html'%}
+{% block body %}
+
+<style>
+    body {
+        background: #f4f6f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 80%;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #343a40;
+        color: white;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background: #f2f2f2;
+    }
+
+    tr:hover {
+        background: #e6f2ff;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        font-size: 13px;
+    }
+
+    .pending {
+        background: orange;
+    }
+
+    .approved {
+        background: green;
+    }
+
+    .rejected {
+        background: red;
+    }
+</style>
+
+<div class="container">
+    <h2>Request Status</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Request</th>
+                <th>Authority</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.request }}</td> <!-- FIXED spacing issue -->
+                <td>{{ i.authority }}</td>
+                <td>{{ i.date }}</td>
+
+                <td>
+                    <span class="status 
+                        {% if i.status == 'approved' %}approved
+                        {% elif i.status == 'rejected' %}rejected
+                        {% else %}pending{% endif %}">
+                        {{ i.status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

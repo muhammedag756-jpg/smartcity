@@ -1,0 +1,111 @@
+{% extends 'user/user home.html'%}
+{% block body%}
+
+<style>
+    body {
+        background: #f4f6f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+        width: 400px;
+        margin: 60px auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: none;
+    }
+
+    .rating {
+        display: flex;
+        justify-content: space-between;
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        color: #ccc;
+    }
+
+    .rating input:checked ~ label {
+        color: #ffc107;
+    }
+
+    .rating label:hover,
+    .rating label:hover ~ label {
+        color: #ffc107;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #0056b3;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Send Feedback</h2>
+
+    <form method="post" action="/myapp/user_sendfeedback/">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Feedback</label>
+            <textarea name="feedback" rows="4" required></textarea>
+        </div>
+
+        <!-- Star Rating -->
+        <div class="form-group">
+            <label>Rating</label>
+            <div class="rating">
+                <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
+                <input type="radio" name="rating" value="4" id="star4"><label for="star4">★</label>
+                <input type="radio" name="rating" value="3" id="star3"><label for="star3">★</label>
+                <input type="radio" name="rating" value="2" id="star2"><label for="star2">★</label>
+                <input type="radio" name="rating" value="1" id="star1"><label for="star1">★</label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">Send Feedback</button>
+    </form>
+</div>
+
+{% endblock %}

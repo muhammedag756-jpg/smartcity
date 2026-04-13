@@ -1,0 +1,55 @@
+{% extends 'admin/admin home.html'%}
+{% block body%}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 rounded-4">
+        <h3 class="text-center mb-4">User Details Form</h3>
+
+        <form method="post" action="/myapp/admin_edit/{{ data.id }}">
+            {% csrf_token %}
+
+            <div class="row g-3">
+
+                <!-- First Name -->
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">First Name</label>
+                    <input type="text" class="form-control" name="name"
+                        value="{{ data.name }}" required>
+                </div>
+
+                <!-- Type -->
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Type</label>
+                    <input type="text" class="form-control" name="type"
+                        value="{{ data.type }}" required>
+                </div>
+
+                <!-- Phone -->
+                <div class="col-12">
+                    <label class="form-label fw-bold">Phone</label>
+                    <input type="number" class="form-control"
+                        placeholder="Enter mobile number"
+                        name="phone" value="{{ data.phone }}" required>
+                </div>
+
+                <!-- Email -->
+                <div class="col-12">
+                    <label class="form-label fw-bold">Email</label>
+                    <input type="email" class="form-control"
+                        placeholder="you@example.com"
+                        name="email" value="{{ data.email }}" required>
+                </div>
+
+                <!-- Button -->
+                <div class="col-12 text-center mt-3">
+                    <button type="submit" class="btn btn-primary px-5 py-2 rounded-pill">
+                        Submit
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

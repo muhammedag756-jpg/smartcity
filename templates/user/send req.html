@@ -1,0 +1,127 @@
+{% extends 'user/user home.html'%}
+{% block body%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    background-color: gr;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  .form-container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    width: 320px;
+    justify-content: center;
+    display:grid;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+  }
+
+  input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  .preview {
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .preview img {
+    max-width: 100%;
+    border-radius: 5px;
+    display: none;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="form-container">
+  <h2>Send Request</h2>
+
+  <form method="post"> {% csrf_token %}
+    
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" placeholder="Enter issue title" required>
+
+    <br><br>
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" placeholder="Describe the issue" required>
+
+    <br><br>
+
+    <label for="image">Upload Image:</label>
+    <input type="file" id="image" name="image" accept="image/*" onchange="previewImage(event)">
+
+    <!-- Image Preview -->
+    <div class="preview">
+      <img id="imgPreview">
+    </div>
+
+    <button type="submit">Send Request</button>
+
+  </form>
+</div>
+
+<script>
+  function previewImage(event) {
+    const image = document.getElementById('imgPreview');
+    image.src = URL.createObjectURL(event.target.files[0]);
+    image.style.display = 'block';
+  }
+</script>
+
+</body>
+{% endblock %}

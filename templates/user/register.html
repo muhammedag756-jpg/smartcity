@@ -1,0 +1,101 @@
+{% extends 'user/user home.html'%}
+{% block body %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+    }
+
+    .form-container {
+        width: 400px;
+        margin: 40px auto;
+        padding: 25px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #0056b3;
+    }
+</style>
+
+<div class="form-container">
+    <h2>User Registration</h2>
+
+    <form method="post" action="/myapp/user_register/" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Phone:</label>
+        <input type="tel" name="phone" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Photo:</label>
+        <input type="file" name="photo">
+
+        <label>Ward:</label>
+        <input type="text" name="ward">
+
+        <label>Place:</label>
+        <input type="text" name="place">
+
+        <label>PIN Code:</label>
+        <input type="text" name="pin">
+
+        <label>Post:</label>
+        <input type="text" name="post">
+
+        <label>Username:</label>
+        <input type="text" name="username" required>
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+{% endblock %}

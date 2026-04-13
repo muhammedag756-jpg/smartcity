@@ -1,0 +1,110 @@
+{% extends 'authority/authority home.html'%}
+{% block body%}
+
+<style>
+    body {
+        background: #f4f6f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 95%;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #007bff;
+        color: white;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background: #f2f2f2;
+    }
+
+    tr:hover {
+        background: #e6f2ff;
+    }
+
+    img {
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .btn:hover {
+        background: #218838;
+    }
+</style>
+
+<div class="container">
+    <h2>Assigned Complaints</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.user }}</td>
+                <td>{{ i.title }}</td>
+                <td>{{ i.description }}</td>
+                <td>{{ i.date }}</td>
+
+                <!-- FIX: show image -->
+                <td>
+                    <img src="{{ i.image.url }}" alt="image">
+                </td>
+
+                <td>
+                    <a href="/myapp/authority_updatestat/{{i.id}}" class="btn">
+                        Update Status
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

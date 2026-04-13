@@ -1,0 +1,125 @@
+{% extends 'user/user home.html'%}
+{% block body%}
+
+<style>
+    body {
+        background: #f4f6f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 90%;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #007bff;
+        color: white;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background: #f2f2f2;
+    }
+
+    tr:hover {
+        background: #e6f2ff;
+    }
+
+    .status {
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        font-size: 13px;
+    }
+
+    .pending {
+        background: orange;
+    }
+
+    .inprogress {
+        background: #17a2b8;
+    }
+
+    .completed {
+        background: green;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .btn:hover {
+        background: #218838;
+    }
+</style>
+
+<div class="container">
+    <h2>Your Requests</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Request</th>
+                <th>Authority</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.request }}</td>
+                <td>{{ i.authority }}</td>
+                <td>{{ i.date }}</td>
+
+                <!-- Status badge -->
+                <td>
+                    <span class="status 
+                        {% if i.status == 'completed' %}completed
+                        {% elif i.status == 'in_progress' %}inprogress
+                        {% else %}pending{% endif %}">
+                        {{ i.status }}
+                    </span>
+                </td>
+
+                <td>
+                    <a href="/myapp/user_sendfeedback/{{ i.id }}" class="btn">
+                        Give Review
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

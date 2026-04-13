@@ -1,0 +1,98 @@
+{% extends 'user/user home.html'%}
+{% block body%}
+
+<style>
+    body {
+        background: #f4f6f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 90%;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #007bff;
+        color: white;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background: #f2f2f2;
+    }
+
+    tr:hover {
+        background: #e6f2ff;
+    }
+
+    .rating {
+        color: #ffc107;
+        font-weight: bold;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 15px;
+        color: #888;
+    }
+</style>
+
+<div class="container">
+    <h2>Your Feedback History</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Authority</th>
+                <th>Request</th>
+                <th>Feedback</th>
+                <th>Rating</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.authority }}</td>
+                <td>{{ i.request }}</td> <!-- fixed name -->
+                <td>{{ i.feedback }}</td>
+
+                <!-- rating styled -->
+                <td class="rating">⭐ {{ i.rating }}/5</td>
+
+                <td>{{ i.date }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="6" class="no-data">No feedback submitted yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

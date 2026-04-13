@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<body>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Smart City Portal</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+
+  <div class="card shadow p-4" style="width: 350px;">
+    
+    <h3 class="text-center mb-3 text-primary">Login</h3>
+    <p class="text-center text-muted small">Access your Smart City Portal</p>
+
+    <form method="post" action="/myapp/login_get/"> 
+      {% csrf_token %}
+      
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email address</label>
+        <input type="text" class="form-control" placeholder="Enter your email" required name="username">
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+          <input type="password" id="password" class="form-control" placeholder="Enter password" required name="password">
+          <button class="btn btn-outline-secondary" type="button" onclick="togglePassword()">👁</button>
+        </div>
+      </div>
+
+      <!-- Remember + Forgot -->
+      <div class="d-flex justify-content-between mb-3">
+        <div>
+          <input type="checkbox" id="remember">
+          <label for="remember"> Remember</label>
+        </div>
+        <a href="#" class="small">Forgot password?</a>
+      </div>
+
+      <!-- Login Button -->
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+
+    </form>
+
+   <a href="/myapp/user_register/">signup</a>
+
+    
+
+  </div>
+
+</div>
+
+<!-- JS for password toggle -->
+<script>
+  function togglePassword() {
+    const password = document.getElementById("password");
+    password.type = password.type === "password" ? "text" : "password";
+  }
+</script>
+
+</body>
+</html>
+    </body>
+</body>
+
+</html>
