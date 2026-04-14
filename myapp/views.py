@@ -128,7 +128,7 @@ def authority_updatestat(request):
         return HttpResponse('ok')    
     return render(request,"authority/update status.html")
 def authority_viewissues(request):
-    a=request_table.objects.all() 
+    a=assign_authority.objects.filter(AUTHORITY__LOGIN=request.user) 
     return render(request,"authority/view assigned issues.html",{"data":a})
 def authority_viewfeed(request):
     a=feedback.objects.all

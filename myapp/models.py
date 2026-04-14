@@ -31,6 +31,8 @@ class request_table(models.Model):
     date=models.DateField()
     title=models.CharField(max_length=50)
     status=models.CharField(max_length=50)
+    
+    
 class assign_authority(models.Model):
     REQUEST=models.ForeignKey(request_table,on_delete=models.CASCADE)
     AUTHORITY=models.ForeignKey(authority,on_delete=models.CASCADE)
