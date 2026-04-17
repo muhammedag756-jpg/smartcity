@@ -66,6 +66,9 @@
 <div class="form-container">
     <h2>Update Status</h2>
 
+    <p><strong>Complaint:</strong> {{ data.REQUEST.title }}</p>
+    <p><strong>Current Status:</strong> {{ data.status }}</p>
+
     <form method="post">
         {% csrf_token %}
 
@@ -73,9 +76,9 @@
             <label>Status</label>
             <select name="status" required>
                 <option value="">-- Select Status --</option>
-                <option value="pending">Pending</option>
-                <option value="in_progress">In Progress</option>
-                <option value="completed">Completed</option>
+                <option value="assigned" {% if data.status == 'assigned' %}selected{% endif %}>Assigned</option>
+                <option value="ongoing" {% if data.status == 'ongoing' %}selected{% endif %}>Ongoing</option>
+                <option value="completed" {% if data.status == 'completed' %}selected{% endif %}>Completed</option>
             </select>
         </div>
 

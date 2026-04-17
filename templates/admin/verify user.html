@@ -2,12 +2,6 @@
 {% block body%}
 
 <style>
-    body {
-        background: #f4f6f9;
-        font-family: Arial, sans-serif;
-    }
-
-    
     .container {
         width: 95%;
         margin: 40px auto;
@@ -71,6 +65,47 @@
     .reject:hover {
         background: #c82333;
     }
+
+    .block {
+        background: #fd7e14;
+    }
+
+    .block:hover {
+        background: #e46d0a;
+    }
+
+    .unblock {
+        background: #0d6efd;
+    }
+
+    .unblock:hover {
+        background: #0b5ed7;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        color: white;
+        text-transform: capitalize;
+        font-size: 13px;
+    }
+
+    .pending {
+        background: #6c757d;
+    }
+
+    .accepted {
+        background: #198754;
+    }
+
+    .rejected {
+        background: #dc3545;
+    }
+
+    .blocked {
+        background: #fd7e14;
+    }
 </style>
 
 <div class="container">
@@ -86,6 +121,7 @@
                 <th>Ward</th>
                 <th>Address</th>
                 <th>image</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -99,14 +135,25 @@
                 <td>{{ i.email }}</td>
                 <td>{{ i.ward }}</td>
                 <td>{{ i.place}},{{i.pin}},{{i.ward}},{{i.post}}</td>
-                <td>
+<td>
     <a href="{{ i.image.url }}" target="_blank">
         <img src="{{ i.image.url }}" height="80px" width="80px" style="border-radius:5px;">
     </a>
 </td>
                 <td>
+                    <span class="status-badge {{ i.status }}">{{ i.status }}</span>
+                </td>
+                <td>
+                    {% if i.status == 'pending' %}
                     <a href="/myapp/accept_user/{{i.id}}" class="btn accept">Accept</a>
                     <a href="/myapp/reject_user/{{i.id}}" class="btn reject">Reject</a>
+                    {% elif i.status == 'accepted' %}
+                    <a href="/myapp/block_user/{{i.id}}" class="btn block">Block</a>
+                    {% elif i.status == 'blocked' %}
+                    <a href="/myapp/unblock_user/{{i.id}}" class="btn unblock">Unblock</a>
+                    {% else %}
+                    Rejected
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

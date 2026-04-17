@@ -64,6 +64,9 @@
 <div class="form-container">
     <h2>Assign Authority</h2>
 
+    <p><strong>Complaint:</strong> {{ issue.title }}</p>
+    <p><strong>User:</strong> {{ issue.USER.name }}</p>
+
     <form method="post">
         {% csrf_token %}
 

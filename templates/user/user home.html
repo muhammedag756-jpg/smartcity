@@ -3,36 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        :root {
+            --page-bg: linear-gradient(180deg, #fff8ef 0%, #fffdf9 45%, #ffffff 100%);
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --text-main: #2e2b28;
+            --text-soft: #6f6a63;
+            --line: rgba(46, 43, 40, 0.1);
+            --primary: #c7681c;
+            --primary-dark: #a95415;
+            --accent: #fff1df;
+            --shadow: 0 20px 60px rgba(98, 60, 21, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            background: var(--page-bg);
+        }
+
+        .dashboard-shell {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 40px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .brand p {
+            margin: 4px 0 0;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            border: 0;
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s ease;
+            cursor: pointer;
+        }
+
+        .page-btn.primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .page-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .page-btn.soft {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .page-btn.soft:hover {
+            background: #ffe5c5;
+        }
+
+        .hero-panel {
+            display: grid;
+            grid-template-columns: 1.4fr 0.9fr;
+            gap: 24px;
+            margin-bottom: 24px;
+            align-items: stretch;
+        }
+
+        .hero-card,
+        .quick-card,
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-card {
+            padding: 34px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            right: -30px;
+            top: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(199,104,28,0.16) 0%, rgba(199,104,28,0) 70%);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #fff1df;
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .hero-card h2 {
+            margin: 0 0 12px;
+            font-size: clamp(1.9rem, 4vw, 3rem);
+            line-height: 1.1;
+        }
+
+        .hero-card p {
+            margin: 0;
+            max-width: 60ch;
+            line-height: 1.7;
+            color: var(--text-soft);
+        }
+
+        .quick-card {
+            padding: 24px;
+        }
+
+        .quick-card h3 {
+            margin: 0 0 16px;
+            font-size: 1.1rem;
+        }
+
+        .quick-links {
+            display: grid;
+            gap: 12px;
+        }
+
+        .quick-link {
+            display: block;
+            padding: 16px 18px;
+            border-radius: 18px;
+            text-decoration: none;
+            border: 1px solid rgba(199,104,28,0.15);
+            background: linear-gradient(180deg, #ffffff 0%, #fff8ef 100%);
+            color: var(--text-main);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(199, 104, 28, 0.12);
+        }
+
+        .quick-link strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .quick-link span {
+            color: var(--text-soft);
+            font-size: 0.92rem;
+        }
+
+        .content-card {
+            padding: 24px;
+        }
+
+        .content-card:empty {
+            display: none;
+        }
+
+        .footer-note {
+            margin-top: 18px;
+            text-align: center;
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .hero-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body>
-   {% block body %}
-{% endblock %}
+    <div class="dashboard-shell">
+        <header class="topbar">
+            <div class="brand">
+                <h1>Citizen Dashboard</h1>
+                <p>Submit complaints, track progress, and review the authority response in one place.</p>
+            </div>
+            <div class="topbar-actions">
+                <button type="button" class="page-btn soft" onclick="window.history.back()">Back</button>
+                <a href="/myapp/login_get/" class="page-btn primary">Log Out</a>
+            </div>
+        </header>
 
-   <div class="px-4 py-5 my-5 text-center">
-  <h1 class="display-5 fw-bold text-body-emphasis">
-    Smart City Public Request Portal
-  </h1>
+        <section class="hero-panel">
+            <div class="hero-card">
+                <span class="eyebrow">Public Complaint System</span>
+                <h2>Report city issues clearly and follow every update without confusion.</h2>
+                <p>From broken roads and drainage issues to sanitation and utility problems, your complaint can now move through a cleaner interface with separate content areas and consistent styling across all user pages.</p>
+            </div>
 
-  <div class="col-lg-6 mx-auto">
-    <p class="lead mb-4">
-      Report issues in your area quickly and easily. Whether it's road damage, waste management, water supply, or streetlight problems, your request will be reviewed and forwarded to the right authority for action. Stay informed with real-time updates and help us build a cleaner, safer, and smarter city.
-    </p>
+            <aside class="quick-card">
+                <h3>Quick Access</h3>
+                <div class="quick-links">
+                    <a href="/myapp/user_sendreq/" class="quick-link">
+                        <strong>Submit Complaint</strong>
+                        <span>Create a new request with title, description, and image.</span>
+                    </a>
+                    <a href="/myapp/user_requeststat/" class="quick-link">
+                        <strong>Track Status</strong>
+                        <span>View authority assignment and latest progress.</span>
+                    </a>
+                    <a href="/myapp/user_viewfeedback/" class="quick-link">
+                        <strong>Your Feedback</strong>
+                        <span>See reviews and ratings you have already submitted.</span>
+                    </a>
+                </div>
+            </aside>
+        </section>
 
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-      <a href="/myapp/user_sendreq/" type="button" class="btn btn-primary btn-lg px-4 gap-3">
-        Submit Request
-      </a>
+        <main class="content-card">
+            {% block body %}
+            {% endblock %}
+        </main>
 
-      <a href="/myapp/user_requeststat/" class="btn btn-outline-secondary btn-lg px-4">
-        Track Status
-      </a>
-    <a href="/myapp/login_get/" class="btn btn-secondary">log out</a>
+        <div class="footer-note">Smart City Citizen Panel</div>
     </div>
-  </div>
-</div>
 </body>
-   
-   
 </html>

@@ -67,6 +67,10 @@
         background: green;
     }
 
+    .ongoing {
+        background: #17a2b8;
+    }
+
     .btn {
         padding: 6px 12px;
         background: #17a2b8;
@@ -92,7 +96,6 @@
                 <th>Description</th>
                 <th>Image</th>
                 <th>Status</th>
-                <th>Assigned</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -111,18 +114,26 @@
 
                 <!-- Dynamic status styling -->
                 <td>
-                    <span class="status {% if i.status == 'completed' %}completed{% else %}pending{% endif %}">
+                    <span class="status {% if i.status == 'completed' %}completed{% elif i.status == 'ongoing' %}ongoing{% else %}pending{% endif %}">
                         {{ i.status }}
                     </span>
                 </td>
 
-                <td>{{ i.assign }}</td>
 
                 <td>
+
+{% if i.status != 'pending' %}
+
                     <a href="/myapp/user_viewassigned/{{i.id}}" class="btn">
                         View Assigned
                     </a>
+
+                    {% else %}
+
+                    wait till admin assigns someone
                 </td>
+
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

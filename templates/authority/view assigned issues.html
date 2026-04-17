@@ -2,14 +2,8 @@
 {% block body%}
 
 <style>
-    body {
-        background: #f4f6f9;
-        font-family: Arial, sans-serif;
-    }
-
     .container {
-        width: 95%;
-        margin: 40px auto;
+        width: 100%;
         background: #fff;
         padding: 20px;
         border-radius: 10px;
@@ -64,10 +58,67 @@
     .btn:hover {
         background: #218838;
     }
+
+    .btn-complete {
+        background: #0d6efd;
+    }
+
+    .btn-complete:hover {
+        background: #0b5ed7;
+    }
+
+    .filters {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+
+    .filter-btn {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 20px;
+        text-decoration: none;
+        background: #e9f3ff;
+        color: #0d6efd;
+        font-weight: 600;
+    }
+
+    .filter-btn.active {
+        background: #0d6efd;
+        color: white;
+    }
+
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        color: white;
+        font-size: 13px;
+        text-transform: capitalize;
+    }
+
+    .assigned {
+        background: #fd7e14;
+    }
+
+    .ongoing {
+        background: #0dcaf0;
+    }
+
+    .completed {
+        background: #198754;
+    }
 </style>
 
 <div class="container">
     <h2>Assigned Complaints</h2>
+
+    <div class="filters">
+        <a href="/myapp/authority_viewissues/" class="filter-btn {% if current_status == 'all' %}active{% endif %}">All</a>
+        <a href="/myapp/authority_viewissues/?status=assigned" class="filter-btn {% if current_status == 'assigned' %}active{% endif %}">Assigned {{ assigned_count }}</a>
+        <a href="/myapp/authority_viewissues/?status=ongoing" class="filter-btn {% if current_status == 'ongoing' %}active{% endif %}">Ongoing {{ ongoing_count }}</a>
+        <a href="/myapp/authority_viewissues/?status=completed" class="filter-btn {% if current_status == 'completed' %}active{% endif %}">Completed {{ completed_count }}</a>
+    </div>
 
     <table>
         <thead>
@@ -78,6 +129,7 @@
                 <th>Description</th>
                 <th>Date</th>
                 <th>Image</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -86,21 +138,37 @@
             {% for i in data %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ i.user }}</td>
-                <td>{{ i.title }}</td>
-                <td>{{ i.description }}</td>
-                <td>{{ i.date }}</td>
+                <td>{{ i.REQUEST.USER.name }}</td>
+                <td>{{ i.REQUEST.title }}</td>
+                <td>{{ i.REQUEST.descreption }}</td>
+                <td>{{ i.REQUEST.date }}</td>
 
                 <!-- FIX: show image -->
                 <td>
-                    <img src="{{ i.image.url }}" alt="image">
+                    <img src="{{ i.REQUEST.image.url }}" alt="image">
                 </td>
 
                 <td>
-                    <a href="/myapp/authority_updatestat/{{i.id}}" class="btn">
-                        Update Status
-                    </a>
+                    <span class="status-badge {{ i.status }}">{{ i.status }}</span>
                 </td>
+
+                <td>
+                    {% if i.status == 'assigned' %}
+                    <a href="/myapp/authority_markongoing/{{i.id}}" class="btn">
+                        Mark as Ongoing
+                    </a>
+                    {% elif i.status == 'ongoing' %}
+                    <a href="/myapp/authority_markcompleted/{{i.id}}" class="btn btn-complete">
+                        Mark as Completed
+                    </a>
+                    {% else %}
+                    Completed
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No complaints found for this filter.</td>
             </tr>
             {% endfor %}
         </tbody>

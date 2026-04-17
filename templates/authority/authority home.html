@@ -1,96 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Authority Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        :root {
+            --page-bg: linear-gradient(180deg, #eef6ff 0%, #f7f9fc 55%, #ffffff 100%);
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --text-main: #183153;
+            --text-soft: #5f6f86;
+            --line: rgba(24, 49, 83, 0.1);
+            --primary: #0f6cab;
+            --primary-dark: #0b5688;
+            --accent: #e9f5ff;
+            --shadow: 0 20px 60px rgba(15, 53, 87, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            background: var(--page-bg);
+        }
+
+        .dashboard-shell {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0 40px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .brand p {
+            margin: 4px 0 0;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            border: 0;
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s ease;
+            cursor: pointer;
+        }
+
+        .page-btn.primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .page-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .page-btn.soft {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .page-btn.soft:hover {
+            background: #d7ecff;
+        }
+
+        .hero-panel {
+            display: grid;
+            grid-template-columns: 1.4fr 0.9fr;
+            gap: 24px;
+            margin-bottom: 24px;
+            align-items: stretch;
+        }
+
+        .hero-card,
+        .quick-card,
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-card {
+            padding: 34px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            right: -60px;
+            top: -40px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(15,108,171,0.16) 0%, rgba(15,108,171,0) 70%);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: #e4f2ff;
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .hero-card h2 {
+            margin: 0 0 12px;
+            font-size: clamp(1.9rem, 4vw, 3rem);
+            line-height: 1.1;
+        }
+
+        .hero-card p {
+            margin: 0;
+            max-width: 60ch;
+            line-height: 1.7;
+            color: var(--text-soft);
+        }
+
+        .quick-card {
+            padding: 24px;
+        }
+
+        .quick-card h3 {
+            margin: 0 0 16px;
+            font-size: 1.1rem;
+        }
+
+        .quick-links {
+            display: grid;
+            gap: 12px;
+        }
+
+        .quick-link {
+            display: block;
+            padding: 16px 18px;
+            border-radius: 18px;
+            text-decoration: none;
+            border: 1px solid rgba(15,108,171,0.14);
+            background: linear-gradient(180deg, #ffffff 0%, #f2f9ff 100%);
+            color: var(--text-main);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(15, 108, 171, 0.1);
+        }
+
+        .quick-link strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .quick-link span {
+            color: var(--text-soft);
+            font-size: 0.92rem;
+        }
+
+        .content-card {
+            padding: 24px;
+        }
+
+        .content-card:empty {
+            display: none;
+        }
+
+        .footer-note {
+            margin-top: 18px;
+            text-align: center;
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .hero-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="dashboard-shell">
+        <header class="topbar">
+            <div class="brand">
+                <h1>Authority Dashboard</h1>
+                <p>Manage complaints, update progress, and review citizen feedback without layout conflicts.</p>
+            </div>
+            <div class="topbar-actions">
+                <button type="button" class="page-btn soft" onclick="window.history.back()">Back</button>
+                <a href="/myapp/login_get/" class="page-btn primary">Log Out</a>
+            </div>
+        </header>
 
-    <body class="d-flex h-100 text-center text-bg-dark"> <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-            <symbol id="check2" viewBox="0 0 16 16">
-                <path
-                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z">
-                </path>
-            </symbol>
-            <symbol id="circle-half" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
-            </symbol>
-            <symbol id="moon-stars-fill" viewBox="0 0 16 16">
-                <path
-                    d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z">
-                </path>
-                <path
-                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
-                </path>
-            </symbol>
-            <symbol id="sun-fill" viewBox="0 0 16 16">
-                <path
-                    d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
-                </path>
-            </symbol>
-        </svg>
-        
-                </svg> <span class="visually-hidden" id="bd-theme-text">Toggle theme</span> </button>
-            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-                <li> <button type="button" class="dropdown-item d-flex align-items-center active"
-                        data-bs-theme-value="light" aria-pressed="true"> <svg class="bi me-2 opacity-50"
-                            aria-hidden="true">
-                            <use href="#sun-fill"></use>
-                        </svg>
-                        Light
-                        <svg class="bi ms-auto d-none" aria-hidden="true">
-                            <use href="#check2"></use>
-                        </svg> </button> </li>
-                <li> <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
-                        aria-pressed="false"> <svg class="bi me-2 opacity-50" aria-hidden="true">
-                            <use href="#moon-stars-fill"></use>
-                        </svg>
-                        Dark
-                        <svg class="bi ms-auto d-none" aria-hidden="true">
-                            <use href="#check2"></use>
-                        </svg> </button> </li>
-                <li> <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"
-                        aria-pressed="false"> <svg class="bi me-2 opacity-50" aria-hidden="true">
-                            <use href="#circle-half"></use>
-                        </svg>
-                        Auto
-                        <svg class="bi ms-auto d-none" aria-hidden="true">
-                            <use href="#check2"></use>
-                        </svg> </button> </li>
-            </ul>
-        </div>
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-            <header class="mb-auto">
-                
-            </header>
-            <main class="px-3">
-                <h1></h1>
-                <p class="lead">Welcome, Authorities
+        <section class="hero-panel">
+            <div class="hero-card">
+                <span class="eyebrow">Smart City Workflow</span>
+                <h2>Take action on public complaints with a clean, focused workspace.</h2>
+                <p>Track assigned issues, keep citizens updated with the latest status, and review feedback after resolution. This dashboard is now separated cleanly from child-page content so every page renders inside the same stable layout.</p>
+            </div>
 
-This platform helps you stay connected with the needs of the public in a faster and more organized way. All requests submitted by citizens are carefully reviewed and forwarded to you for timely action.</p>
-                <p class="lead"> <a href="/myapp/user_viewassigned/" class="btn btn-lg btn-light fw-bold border-white bg-white">assigned issues</a><br><br>
-                    <a href="/myapp/user_viewfeedback/" class="btn btn-lg btn-light fw-bold border-white bg-white">feedbacks</a>
-                    <a href="/myapp/login_get/" class="btn btn-secondary">log out</a>
-                </p>
-                </p>
-            </main>
- {% block body %}
-{% endblock %}
-            <footer class="mt-auto text-white-50">
-                <p> <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a
-                        href="https://x.com/mdo" class="text-white">@mdo</a>.</p>
-            </footer>
-        </div>
-        <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            class="astro-vvvwv3sm"></script>
-    </body>
-    </header>
+            <aside class="quick-card">
+                <h3>Quick Access</h3>
+                <div class="quick-links">
+                    <a href="/myapp/authority_viewissues/" class="quick-link">
+                        <strong>Assigned Issues</strong>
+                        <span>Open complaints forwarded to your authority.</span>
+                    </a>
+                    <a href="/myapp/authority_viewfeed/" class="quick-link">
+                        <strong>Feedbacks</strong>
+                        <span>Citizen reviews and ratings for completed work.</span>
+                    </a>
+                </div>
+            </aside>
+        </section>
+
+        <main class="content-card">
+            {% block body %}
+            {% endblock %}
+        </main>
+
+        <div class="footer-note">Smart City Authority Panel</div>
+    </div>
 </body>
-
 </html>

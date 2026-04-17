@@ -77,12 +77,9 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ i.feedback }}</td>
-
-                <!-- Rating styled -->
-                <td class="rating">⭐ {{ i.rating }}/5</td>
-
-                <td>{{ i.request }}</td>
-                <td>{{ i.user }}</td>
+                <td class="rating">&#11088; {{ i.ratings }}/5</td>
+                <td>{{ i.ASSIGN.REQUEST.title }}</td>
+                <td>{{ i.USER.name }}</td>
                 <td>{{ i.date }}</td>
             </tr>
 

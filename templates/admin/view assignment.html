@@ -1,5 +1,5 @@
 {% extends 'admin/admin home.html'%}
-{% block body %}
+{% block body%}
 
 <style>
     body {
@@ -8,7 +8,7 @@
     }
 
     .container {
-        width: 80%;
+        width: 90%;
         margin: 40px auto;
         background: #fff;
         padding: 20px;
@@ -28,7 +28,7 @@
     }
 
     thead {
-        background: #343a40;
+        background: #007bff;
         color: white;
     }
 
@@ -56,17 +56,30 @@
         background: orange;
     }
 
-    .approved {
+    .inprogress {
+        background: #17a2b8;
+    }
+
+    .completed {
         background: green;
     }
 
-    .rejected {
-        background: red;
+    .btn {
+        padding: 6px 12px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .btn:hover {
+        background: #218838;
     }
 </style>
 
 <div class="container">
-    <h2>Request Status</h2>
+    <h2>Assigned Requests</h2>
 
     <table>
         <thead>
@@ -76,6 +89,7 @@
                 <th>Authority</th>
                 <th>Date</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -83,17 +97,26 @@
             {% for i in data %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ i.request }}</td> <!-- FIXED spacing issue -->
-                <td>{{ i.authority }}</td>
+                <td>title : {{ i.REQUEST.title }} <br> Description : {{ i.REQUEST.descreption}}
+                <br> <img width="200px" src="{{ i.REQUEST.image.url }}"> 
+                </td>
+                <td>{{ i.AUTHORITY.name }}</td>
                 <td>{{ i.date }}</td>
 
+                <!-- Status badge -->
                 <td>
                     <span class="status 
-                        {% if i.status == 'approved' %}approved
-                        {% elif i.status == 'rejected' %}rejected
+                        {% if i.status == 'completed' %}completed
+                        {% elif i.status == 'ongoing' %}inprogress
                         {% else %}pending{% endif %}">
                         {{ i.status }}
                     </span>
+                </td>
+
+                <td>
+                    <a href="/myapp/admin_authorityfeedbackwithid/{{ i.AUTHORITY.id }}" class="btn">
+                        View Reviews
+                    </a>
                 </td>
             </tr>
             {% endfor %}

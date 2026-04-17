@@ -10,6 +10,9 @@ class authority(models.Model):
     type=models.CharField(max_length=100)
     phone=models.BigIntegerField()
     email=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
     
 class user_table(models.Model):
     LOGIN=models.ForeignKey(User,on_delete=models.CASCADE) 
@@ -22,6 +25,10 @@ class user_table(models.Model):
     pin=models.IntegerField()
     post=models.CharField(max_length=50)
     status=models.CharField(max_length=50)
+    type=models.CharField(max_length=50, default='user')
+
+    def __str__(self):
+        return self.name
    
     
 class request_table(models.Model):
@@ -31,6 +38,9 @@ class request_table(models.Model):
     date=models.DateField()
     title=models.CharField(max_length=50)
     status=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
     
     
 class assign_authority(models.Model):
@@ -38,12 +48,18 @@ class assign_authority(models.Model):
     AUTHORITY=models.ForeignKey(authority,on_delete=models.CASCADE)
     date=models.DateField()
     status=models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.REQUEST.title} - {self.AUTHORITY.name}"
 class feedback(models.Model):
     ASSIGN=models.ForeignKey(assign_authority,on_delete=models.CASCADE)
     USER=models.ForeignKey(user_table,on_delete=models.CASCADE)
     feedback=models.CharField(max_length=50)
     ratings=models.FloatField()
     date=models.DateField()
+
+    def __str__(self):
+        return self.feedback
     
 
 

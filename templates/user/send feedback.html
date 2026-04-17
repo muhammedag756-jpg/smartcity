@@ -33,7 +33,7 @@
         color: #555;
     }
 
-    textarea {
+    textarea, input[type="text"] {
         width: 100%;
         padding: 8px;
         border: 1px solid #ccc;
@@ -56,12 +56,11 @@
         color: #ccc;
     }
 
-    .rating input:checked ~ label {
+    .rating input:checked + label {
         color: #ffc107;
     }
 
-    .rating label:hover,
-    .rating label:hover ~ label {
+    .rating label:hover {
         color: #ffc107;
     }
 
@@ -84,23 +83,32 @@
 <div class="form-container">
     <h2>Send Feedback</h2>
 
-    <form method="post" action="/myapp/user_sendfeedback/">
+    <form method="post" action="/myapp/user_sendfeedback/{{ data.id }}">
         {% csrf_token %}
 
         <div class="form-group">
-            <label>Feedback</label>
-            <textarea name="feedback" rows="4" required></textarea>
+            <label>Authority</label>
+            <input type="text" value="{{ data.AUTHORITY.name }}" readonly>
         </div>
 
-        <!-- Star Rating -->
+        <div class="form-group">
+            <label>Request</label>
+            <input type="text" value="{{ data.REQUEST.title }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Feedback</label>
+            <textarea name="feedback" rows="4" required>{% if existing_feedback %}{{ existing_feedback.feedback }}{% endif %}</textarea>
+        </div>
+
         <div class="form-group">
             <label>Rating</label>
             <div class="rating">
-                <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
-                <input type="radio" name="rating" value="4" id="star4"><label for="star4">★</label>
-                <input type="radio" name="rating" value="3" id="star3"><label for="star3">★</label>
-                <input type="radio" name="rating" value="2" id="star2"><label for="star2">★</label>
-                <input type="radio" name="rating" value="1" id="star1"><label for="star1">★</label>
+                <input type="radio" name="rating" value="1" id="star1" {% if existing_feedback and existing_feedback.ratings == 1 %}checked{% endif %}><label for="star1">&#9733;</label>
+                <input type="radio" name="rating" value="2" id="star2" {% if existing_feedback and existing_feedback.ratings == 2 %}checked{% endif %}><label for="star2">&#9733;</label>
+                <input type="radio" name="rating" value="3" id="star3" {% if existing_feedback and existing_feedback.ratings == 3 %}checked{% endif %}><label for="star3">&#9733;</label>
+                <input type="radio" name="rating" value="4" id="star4" {% if existing_feedback and existing_feedback.ratings == 4 %}checked{% endif %}><label for="star4">&#9733;</label>
+                <input type="radio" name="rating" value="5" id="star5" {% if existing_feedback and existing_feedback.ratings == 5 %}checked{% endif %}><label for="star5">&#9733;</label>
             </div>
         </div>
 

@@ -76,13 +76,10 @@
             {% for i in data %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ i.authority }}</td>
-                <td>{{ i.request }}</td> <!-- fixed name -->
+                <td>{{ i.ASSIGN.AUTHORITY.name }}</td>
+                <td>{{ i.ASSIGN.REQUEST.title }}</td>
                 <td>{{ i.feedback }}</td>
-
-                <!-- rating styled -->
-                <td class="rating">⭐ {{ i.rating }}/5</td>
-
+                <td class="rating">&#11088; {{ i.ratings }}/5</td>
                 <td>{{ i.date }}</td>
             </tr>
 

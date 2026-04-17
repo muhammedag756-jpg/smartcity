@@ -73,7 +73,7 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Authority</th>
+                <th>Status</th>
                 <th>User</th>
                 <th>Image</th>
                 <th>Title</th>
@@ -87,8 +87,8 @@
             {% for i in data %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ i.authority }}</td>
-                <td>{{ i.user }}</td>
+                <td>{{ i.status }}</td>
+                <td>{{ i.USER.name }}</td>
 
                 <!-- FIX: show image -->
                 <td>
